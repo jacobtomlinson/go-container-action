@@ -1,7 +1,13 @@
-FROM alpine:3.10
+FROM golang:1.13 as builder
 
-COPY LICENSE README.md /
+WORKDIR /app
 
-COPY entrypoint.sh /entrypoint.sh
+COPY . /app
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN CGO_ENABLED=0 go build -ldflags="-w -s" -v -o app .
+
+FROM gcr.io/distroless/static
+
+COPY --from=builder /app/app /app
+
+ENTRYPOINT ["/app"]
