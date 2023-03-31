@@ -10,5 +10,5 @@ func main() {
 
 	output := fmt.Sprintf("Hello %s", myInput)
 
-	os.Setenv("GITHUB_OUTPUT", "myOutput="+output )
+	os.Setenv("GITHUB_OUTPUT", "myOutput=" + string(output))
 }
